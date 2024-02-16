@@ -1,19 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Provider } from "react-redux";
+
 import Switch from './Switch';
 import Widget from './Widget';
 import ListProduct from './ListProduct';
 import Edit from './Edit';
-import AppStore from '../utils/AppStore';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from '../utils/cartSlice';
 
 function Cart() {
 
-
-    const [cartData, setCartData] = useState([]);
-    const [edit, setEdit] = useState(false);
+    const cartItems=useSelector((store)=>store.cart.items);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,19 +24,24 @@ function Cart() {
         try {
             const data = await fetch(Api);
             const jsonData = await data.json();
-            setCartData(jsonData);
-            dispatch(addItem())
+            jsonData.map((item)=>{item.id=parseInt(Math.random() * 13283*1294)});
+            console.log(jsonData);
+            // console.log(jsonData[0]);
+            dispatch(addItem(jsonData));
         } catch (error) {
             console.log(error);
             console.log("I guess Rate Limit is enabled on this api thats why we are getting this issue");
         }
     }
-
+      if(cartItems.length===0){
+        return <h1 className='text-5xl text-gray-500 absolute top-[50%] left-[45%]'>Loading....</h1>
+      }
+      console.log(cartItems);
     let outOfStock = 0;
     let category = {};
-    let totalValue = cartData.reduce((accumulator, currentValue) => accumulator + ((currentValue.value.length >= 1) ? (+currentValue.value.slice(1)) : (+currentValue.value)),
+    let totalValue = cartItems.reduce((accumulator, currentValue) => accumulator + ((currentValue.value.length >= 1) ? (+currentValue.value.slice(1)) : (+currentValue.value)),
         0)
-    cartData.map(item => {
+        cartItems.map(item => {
         if (item.quantity === 0) outOfStock++;
         category[item.category] = 1;
     })
@@ -46,15 +49,13 @@ function Cart() {
 
     return (
         <>
-            <Provider store={AppStore}>
                 <Switch></Switch>
                 <div className='containerCart my-24 mx-10'>
                     <h1 className='text-gray-400 text-4xl '> Inventory Stats</h1>
-                    <Widget cartData={cartData} totalValue={totalValue} outOfStock={outOfStock} cateogarySize={cateogarySize} ></Widget>
-                    <ListProduct cartData={cartData} setEdit={setEdit} edit={edit} ></ListProduct>
-                    {edit && <Edit setEdit={setEdit} edit={edit} ></Edit>}
+                    <Widget cartData={cartItems} totalValue={totalValue} outOfStock={outOfStock} cateogarySize={cateogarySize} ></Widget>
+                    <ListProduct cartData={cartItems} ></ListProduct>   
                 </div>
-            </Provider>
+        
 
         </>
 

@@ -1,8 +1,11 @@
 import React from 'react'
 import CartData from './CartData';
 import { useState } from 'react';
-function ListProduct({cartData,setEdit,edit}) {
-  
+import { useSelector, useDispatch } from 'react-redux';
+
+
+function ListProduct() {
+    const cartItems=useSelector((store)=>store.cart.items);
     return (
 
         <div className='h-[600px] bg-[#212124] my-10 rounded-lg'>
@@ -15,9 +18,11 @@ function ListProduct({cartData,setEdit,edit}) {
                 <li className='text-[#5c6f17] p-3  bg-[#0b0b0c] rounded-md m-3'>Actions</li>
             </ul>
             {
-                cartData.map((item) => <CartData data={item} setEdit={setEdit} edit={edit}></CartData>)
+                cartItems.map((item) => <CartData data={item} key={item.id}></CartData>)
             }
+            
         </div>
+        
     )
 }
 

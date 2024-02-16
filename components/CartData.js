@@ -1,14 +1,22 @@
 import React from 'react'
 import { useState } from 'react';
+import Edit from './Edit';
+import { UseSelector,useDispatch } from 'react-redux';
+import { removeItem } from '../utils/cartSlice';
 
+function CartData({data}) {
 
-
-function CartData({data,setEdit,edit}) {
-    // console.log(data);
+  const dispatch = useDispatch();
+  const [edit, setEdit] = useState(false);
     const editHandler=()=>{
       setEdit(!edit);
-      // console.log("hua")
     }
+
+    const deleHandler=()=>{
+      console.log(data);
+      dispatch(removeItem(data));
+    }
+
   return (
     <>
     <div>
@@ -22,13 +30,14 @@ function CartData({data,setEdit,edit}) {
             <div className='flex'>
             <button className='text-white my-3 px-2' onClick={editHandler}><i class="fa-solid fa-pen"></i></button>
             <button className='text-white my-3 px-2'><i class="fa-regular fa-eye"></i></button>
-            <button className='text-white my-3 px-2'><i class="fa-solid fa-trash"></i></button>
+            <button className='text-white my-3 px-2' onClick={deleHandler}><i class="fa-solid fa-trash"></i></button>
             </div>
         </ul>
       
-           
+        {edit && <Edit data={data}  setEdit={setEdit} edit={edit} ></Edit>}
    
     </div>
+    
     </>
   )
 }
