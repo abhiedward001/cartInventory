@@ -1,16 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-
 import Switch from './Switch';
 import Widget from './Widget';
 import ListProduct from './ListProduct';
-import Edit from './Edit';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from '../utils/cartSlice';
 
 function Cart() {
-
+ 
+    const [userAccess,setUserAccess]=useState(false);
     const cartItems=useSelector((store)=>store.cart.items);
     const dispatch = useDispatch();
 
@@ -25,8 +24,6 @@ function Cart() {
             const data = await fetch(Api);
             const jsonData = await data.json();
             jsonData.map((item)=>{item.id=parseInt(Math.random() * 13283*1294)});
-            console.log(jsonData);
-            // console.log(jsonData[0]);
             dispatch(addItem(jsonData));
         } catch (error) {
             console.log(error);
@@ -49,11 +46,11 @@ function Cart() {
 
     return (
         <>
-                <Switch></Switch>
+                <Switch userAccess={userAccess} setUserAccess={setUserAccess}></Switch>
                 <div className='containerCart my-24 mx-10'>
                     <h1 className='text-gray-400 text-4xl '> Inventory Stats</h1>
                     <Widget cartData={cartItems} totalValue={totalValue} outOfStock={outOfStock} cateogarySize={cateogarySize} ></Widget>
-                    <ListProduct cartData={cartItems} ></ListProduct>   
+                    <ListProduct userAccess={userAccess} ></ListProduct>   
                 </div>
         
 

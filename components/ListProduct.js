@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 
-function ListProduct() {
+function ListProduct({userAccess}) {
     const cartItems=useSelector((store)=>store.cart.items);
     return (
 
@@ -18,7 +18,7 @@ function ListProduct() {
                 <li className='text-[#5c6f17] p-3  bg-[#0b0b0c] rounded-md m-3'>Actions</li>
             </ul>
             {
-                cartItems.map((item) => <CartData data={item} key={item.id}></CartData>)
+                cartItems.map((item) => <CartData data={item} key={item.id}  userAccess={userAccess}></CartData>)
             }
             
         </div>
