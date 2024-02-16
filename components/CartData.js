@@ -31,31 +31,31 @@ function CartData({ data, userAccess }) {
 
             {!userAccess ? (
               <button className='text-white my-3 px-2' onClick={editHandler}>
-                <i className="fa-solid fa-pen bg-green-500 rounded-2xl p-2"></i>
+                <i className="fa-solid fa-pen text-green-500 rounded-2xl p-2"></i>
               </button>
             ) : (
               <button className='text-white my-3 px-2 disabled' disabled>
-                <i className="fa-solid fa-pen  "></i>
+                <i className="fa-solid fa-pen text-gray-500 "></i>
               </button>
             )}
 
             {!userAccess ? (
               <button className='text-white my-3 px-2'>
-                <i class="fa-regular fa-eye"></i>
+                <i class="fa-regular fa-eye text-gray-500"></i>
               </button>
             ) : (
               <button className='text-white my-3 px-2'>
-                <i class="fa-regular fa-eye"></i>
+                <i class="fa-regular fa-eye text-gray-500"></i>
                 </button>
             )}
 
             {!userAccess ? (
                <button className='text-white my-3 px-2' onClick={deleHandler}>
-                <i class="fa-solid fa-trash bg-red-500 p-2 rounded-2xl"></i>
+                <i class="fa-solid fa-trash text-red-500 p-2 rounded-2xl"></i>
                 </button>
             ) : (
               <button className='text-white my-3 px-2 disabled' disabled >
-                <i class="fa-solid fa-trash "></i>
+                <i class="fa-solid fa-trash  text-gray-500"></i>
                 </button>
             )}
 

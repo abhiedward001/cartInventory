@@ -28,15 +28,18 @@ function Cart() {
         } catch (error) {
             console.log(error);
             console.log("I guess Rate Limit is enabled on this api thats why we are getting this issue");
+            alert(`${error}. Rate Limit is enabled,Refresh After Sometime`);
         }
     }
       if(cartItems.length===0){
-        return <h1 className='text-5xl text-gray-500 absolute top-[50%] left-[45%]'>Loading....</h1>
+        return <div>
+        <h1 className='text-5xl text-gray-500 absolute top-[50%] left-[45%]'>Loading....</h1>
+        </div>
       }
       console.log(cartItems);
     let outOfStock = 0;
     let category = {};
-    let totalValue = cartItems.reduce((accumulator, currentValue) => accumulator + ((currentValue.value.length >= 1) ? (+currentValue.value.slice(1)) : (+currentValue.value)),
+    let totalValue = cartItems.reduce((accumulator, currentValue) => accumulator + ((currentValue.value[0]==='$') ? (+currentValue.value.slice(1)) : (+currentValue.value)),
         0)
         cartItems.map(item => {
         if (item.quantity === 0) outOfStock++;
